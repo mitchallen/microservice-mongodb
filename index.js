@@ -47,8 +47,6 @@ module.exports = function (spec, modCallback) {
 
     var test = getDB().then(function(dbx) {
 
-        console.log("THEN");
-
          // Setup Microservice
         let options = {
             service: spec,

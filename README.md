@@ -60,13 +60,11 @@ For MongoDB and other database support the original core service object was exte
 
 Pass the __service__ object that you define to the module:
 
-    require('@mitchallen/microservice-mongodb')(service);
-    
-Or if you want to export the returned value:
-
-    module.exports = require('@mitchallen/microservice-mongodb')(service);
-    
+    require('@mitchallen/microservice-mongodb')(service, callback);
+        
 #### Return Value
+
+## TODO - this section needs revision
 
 The object returned by the module contains a __server__ field:
 
@@ -78,9 +76,14 @@ It was handy for me to use the __close__ method in the unit tests so I wouldn't 
 
 Here is an example of how to create it, then use the server return value to close it (checking for null omitted for brevity):
 
-    var obj = require('@mitchallen/microservice-mongodb')(options);
-    var server = obj.server;
-    server.close();
+    require('@mitchallen/microservice-mongodb')(options, function(err,obj) {
+        if(err) {
+        	// ...
+        }
+        var server = obj.server;
+        server.close()
+    });
+
 
 ### Example
 
