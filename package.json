@@ -13,10 +13,10 @@
     "url": "https://bitbucket.org/mitchallen/microservice-mongodb.git"
   },
   "author": "Mitch Allen <npm@mitchallen.com> (http://mitchallen.com)",
+  "license": "ISC",
   "dependencies": {
     "@mitchallen/microservice-core": "^0.2.2",
-    "mongodb": "^2.2.5",
-    "q": "^1.4.1"
+    "mongodb": "^2.2.5"
   },
   "devDependencies": {
     "should": "^10.0.0",

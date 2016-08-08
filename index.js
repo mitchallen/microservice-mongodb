@@ -7,68 +7,49 @@
 
 "use strict";
 
-let Q = require('Q');
-
 module.exports = function (spec, modCallback) {
 
     let demand = require('./demand');
 
     let mongoClient = require('mongodb').MongoClient;
 
-    let MDB = spec.mongodb;
+    let mongodb = spec.mongodb;
 
-    demand.notNull(MDB, "missing mongodb information");
-    demand.notNull(MDB.uri, "missing mongodb.uri information");
+    let verbose = spec.verbose;
 
-    let uri = MDB.uri;
+    demand.notNull(mongodb, "missing mongodb information");
+    demand.notNull(mongodb.uri, "missing mongodb.uri information");
 
-    console.log(uri);
+    let uri = mongodb.uri;
 
     // let dbOptions = mongodb.options;
 
-    function getDB() {
+    mongoClient.connect(uri, function (err, db) {
 
-        var deferred = Q.defer();
+        if (err) {
 
-        mongoClient.connect(uri, function (err, db) {
-            console.log("connecting ...");
-            if (err) {
-                console.error('ERROR: connecting to : %s', uri);
-                console.error(err);
-                deferred.reject(new Error(err));
-            } else {
+            console.error('ERROR: connecting to : %s', uri);
+            console.error(err);
+            modCallback(err);
+
+        } else {
+
+            if( verbose ) {
                 console.log('mongodb connected: ', uri);
-                deferred.resolve(db);
             }
-        });
 
-        return deferred.promise;
-    }
+            // Setup Microservice
 
-    var test = getDB().then(function(dbx) {
-
-         // Setup Microservice
-        let options = {
-            service: spec,
-            connection: {
-                mongodb: {
-                    db: dbx
+            let options = {
+                service: spec,
+                connection: {
+                    mongodb: {
+                        db: db
+                    }
                 }
-            }
-        };
+            };
 
-        modCallback( null, require('@mitchallen/microservice-core')(options) );
-
-    }).fail(function(err){
-
-        console.log("ERROR");
-        console.error(err);
-        console.trace()
- 
-        modCallback(err);
+            modCallback( null, require('@mitchallen/microservice-core')(options) );
+        }
     });
-
-   
 };
-
-
