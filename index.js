@@ -9,7 +9,7 @@
 
 module.exports = function (spec, modCallback) {
 
-    let demand = require('./demand');
+    let demand = require('@mitchallen/demand');
 
     let mongoClient = require('mongodb').MongoClient;
 

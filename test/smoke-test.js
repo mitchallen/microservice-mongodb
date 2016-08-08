@@ -1,5 +1,5 @@
 /**
-    Module: @mitchallen/microservice-mongo
+    Module: @mitchallen/microservice-mongodb
       Test: smoke-test
     Author: Mitch Allen
 */
@@ -24,7 +24,7 @@ var request = require('supertest'),
         }
     };
 
-describe('mongo service smoke test', function() {
+describe('mongodb microservice smoke test', function() {
 
       it('should not throw an error', function(done) {
         var options = {
