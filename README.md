@@ -20,17 +20,13 @@ You must use __npm__ __2.7.0__ or higher because of the scoped package name.
 
 ## Usage
 
-Provides MongoDB access to a microservice.
-
-### Connection Info
-
-By default the module will attempt to connect with a local MongoDB on port 8000. To specify different connection info update these environment variable (*never* check sensitive connection info into source!):
-
-    export TBD=TBD
+Provides MongoDB access through a microservice.
 
 ### Define a Service Object
 
-For MongoDB and other database support the original core service object was extended to return connection info (__info.connect__).  The info.connect object contains and item: __mongo__ to access the dabase.
+For MongoDB and other database support the original core service object was extended to return connection info (__info.connect__).  The info.connect object contains an item: __mongodb__ to access the database.
+
+The example shows one way of getting connection info from an environment variable.
 
     var service = {
     	name: ...,
@@ -38,6 +34,11 @@ For MongoDB and other database support the original core service object was exte
     	verbose: ...,
     	apiVersion: ...,
     	port: ...,
+    	
+    	mongodb: {
+            uri: process.env.TEST_MONGO_URI || 'mongodb://localhost/test',
+        },
+        
     	method: function (info) {
     	
     		var router = info.router,
@@ -54,19 +55,24 @@ For MongoDB and other database support the original core service object was exte
     	}
 
     };
+  
+To login with a username and password, you would need a __uri__ like this example for [mlab.com](http://mlab.com):
+
+    export TEST_MONGO_URI='mongodb://foo:fooword@ds12345.mlab.com:12345/dbnode01'  
     
+You would replace __foo__ with your __mlab__ username and __fooword__ with your password. 
+
+You don't have to use your mlab login info. They let you add other users, such as a test user.
+
+The __12345__ portion of the string would change to match the uri that mlabs gives you. 
     
 ### Pass the Service Object to the microservice-mongodb module:
 
 Pass the __service__ object that you define to the module:
 
-    require('@mitchallen/microservice-mongodb')(service, callback);
-        
-#### Return Value
+    require('@mitchallen/microservice-mongodb')(service, function(err,obj) {});
 
-## TODO - this section needs revision
-
-The object returned by the module contains a __server__ field:
+The object returned by the callback contains a __server__ field:
 
     { server: server }
 
@@ -89,9 +95,7 @@ Here is an example of how to create it, then use the server return value to clos
 
 You can find working examples in the examples folder of the git repo.
 
-* __examples / table-list__ - demos how to read a list of tables in MongoDB
-* __examples / music-post__ - demos how to post a record to the Mongo (see music-post README for script to create Music table)
-
+* __examples / music-post__ - demos how to post a record to MongoDB. See that folders __README__ for more info.
 
 * * *
 

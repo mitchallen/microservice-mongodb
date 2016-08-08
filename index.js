@@ -3,7 +3,7 @@
     Author: Mitch Allen
 */
 
-/*jslint es6 */
+/*jshint esversion: 6 */
 
 "use strict";
 
@@ -21,21 +21,19 @@ module.exports = function (spec, modCallback) {
     demand.notNull(mongodb.uri, "missing mongodb.uri information");
 
     let uri = mongodb.uri;
-
-    // let dbOptions = mongodb.options;
-
+    
     mongoClient.connect(uri, function (err, db) {
 
         if (err) {
 
-            console.error('ERROR: connecting to : %s', uri);
+            console.error('ERROR: connecting to MongoDB');
             console.error(err);
             modCallback(err);
 
         } else {
 
             if( verbose ) {
-                console.log('mongodb connected: ', uri);
+                console.log('mongodb connected. ');
             }
 
             // Setup Microservice

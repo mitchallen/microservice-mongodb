@@ -17,11 +17,7 @@ var request = require('supertest'),
         // NOTE: if you change '/test' to '/test2', 
         // a test2 DB will be created in Mongo
         // Then all operations will go to test2.
-        uri: process.env.MONGO_SERVICE_DB || 'mongodb://localhost/test',
-        options: {
-            user: process.env.MONGO_SERVICE_USER || null,
-            pass: process.env.MONGO_SERVICE_PASS || null
-        }
+        uri: process.env.TEST_MONGO_URI || 'mongodb://localhost/test',
     };
 
 describe('mongodb microservice smoke test', function() {
@@ -71,10 +67,11 @@ describe('mongodb microservice smoke test', function() {
                 should.exist(db);
                 router.post( path, function (req, res) {
 
-                    var collection = db.collection('documents');
+                    var collection = db.collection('test-qa');
+                    
                     // Insert some documents 
 
-                    // In the shell, verify with: db.documents.find()
+                    // In the shell, verify with: db.test-qa.find()
 
                     collection.insert(
                         req.body
@@ -88,16 +85,10 @@ describe('mongodb microservice smoke test', function() {
                                 .send(err);
                         } else {
 
-                             let docId = result.insertedIds[0];
-
-                            if( info.verbose ) {
-                                console.log("Inserted document into the document collection");
-                                console.log(result);
-                                console.log("DOC ID: %s", docId )
-                            }
+                            let docId = result.insertedIds[0];
 
                             res
-                                .location("/documents/" + docId )
+                                .location( prefix + path + "/" + docId )
                                 .status(201)
                                 .json(result);
                         }
@@ -162,7 +153,7 @@ describe('mongodb microservice smoke test', function() {
                 should.exist(db);
                 router.get( path, function (req, res) {
 
-                    var collection = db.collection('documents');
+                    var collection = db.collection('test-qa');
                     
                     collection.find({}).limit(3).toArray(function(err, docs) {
                         

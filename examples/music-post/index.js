@@ -21,20 +21,7 @@ var service = {
     port: process.env.TABLE_LIST_PORT || 8003,
 
     mongodb: {
-        uri: process.env.MONGO_SERVICE_DB || 'mongodb://localhost/test',
-        options: {
-            user: process.env.MONGO_SERVICE_USER || null,
-            pass: process.env.MONGO_SERVICE_PASS || null
-        },
-        model: {
-            name: "music",
-            schema: {
-                CatalogID: String,
-                Artist: String,
-                SongTitle: String,
-                Album: String
-            }
-        }
+        uri: process.env.TEST_MONGO_URI || 'mongodb://localhost/test',
     },
 
     method: function(info) {
@@ -46,7 +33,7 @@ var service = {
 
         router.post( path, function (req, res) {
 
-            var collection = db.collection('documents');
+            var collection = db.collection('music');
 
             // Insert some documents 
             // In the shell, verify with: db.documents.find()
