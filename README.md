@@ -42,12 +42,12 @@ The example shows one way of getting connection info from an environment variabl
     	method: function (info) {
     	
     		var router = info.router,
-                conn = info.connection.mongodb.conn;
+                db = info.connection.mongodb.db;
     		
     		router.[get,post,put,patch,delete] ... { 
     		   
 				// Call a MongDB API method
-				conn.[method](function(err,...) {
+				db.[method](function(err,...) {
 				})
     		};
     		
@@ -121,6 +121,10 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Version 0.1.2 release notes
+
+* Updated example pseudo code in readme
 
 #### Version 0.1.1 release notes
 
