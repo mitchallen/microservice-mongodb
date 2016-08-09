@@ -1,6 +1,6 @@
 {
   "name": "@mitchallen/microservice-mongodb",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "microservice module for connecting to MongoDB",
   "main": "index.js",
   "scripts": {
