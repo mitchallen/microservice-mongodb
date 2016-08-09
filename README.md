@@ -122,6 +122,10 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.1.3 release notes
+
+* Updated package info in example
+
 #### Version 0.1.2 release notes
 
 * Updated example pseudo code in readme
