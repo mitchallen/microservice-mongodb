@@ -68,9 +68,11 @@ The __12345__ portion of the string would change to match the uri that mlabs giv
     
 ### Pass the Service Object to the microservice-mongodb module:
 
-Pass the __service__ object that you define to the module:
+Pass the __service__ object that you define to the __Service___ method:
 
-    require('@mitchallen/microservice-mongodb')(service, function(err,obj) {});
+	var core = require('@mitchallen/microservice-mongodb');
+
+    core.service(service, function(err,obj) {});
 
 The object returned by the callback contains a __server__ field:
 
@@ -80,9 +82,9 @@ It's a pointer to the express modules server. If you are familiar with express, 
 
 It was handy for me to use the __close__ method in the unit tests so I wouldn't get port-in-use errors. It's also used internally when the module unexpectedly terminates.
 
-Here is an example of how to create it, then use the server return value to close it (checking for null omitted for brevity):
+Here is how it should be used:
 
-    require('@mitchallen/microservice-mongodb')(options, function(err,obj) {
+    core.Service(options, function(err,obj) {
         if(err) {
         	// ...
         }
@@ -122,6 +124,12 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Version 0.2.0 release notes
+
+* Updated @mitchallen/microservice-core to 0.3.1
+* Now uses __Service__ method 
+* Bumbed version because breaks backward compatiblity
 
 #### Version 0.1.3 release notes
 

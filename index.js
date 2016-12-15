@@ -7,11 +7,11 @@
 
 "use strict";
 
-module.exports = function (spec, modCallback) {
+let demand = require('@mitchallen/demand'),
+    mongoClient = require('mongodb').MongoClient,
+    core = require('@mitchallen/microservice-core');
 
-    let demand = require('@mitchallen/demand');
-
-    let mongoClient = require('mongodb').MongoClient;
+module.exports.Service = function (spec, modCallback) {
 
     let mongodb = spec.mongodb;
 
@@ -47,7 +47,7 @@ module.exports = function (spec, modCallback) {
                 }
             };
 
-            modCallback( null, require('@mitchallen/microservice-core')(options) );
+            modCallback( null, core.Service(options) );
         }
     });
 };
