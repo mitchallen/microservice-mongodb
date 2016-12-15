@@ -1,10 +1,11 @@
 "use strict";
 
-let demand = require('@mitchallen/demand');
-let prefix = process.env.MUSIC_POST_API_VERSION || '/v1';
-let tableName = "music";
-let path = "/" + tableName;
-let sLocation = prefix + path;
+let demand = require('@mitchallen/demand'),
+    core = require('@mitchallen/microservice-mongodb'),
+    prefix = process.env.MUSIC_POST_API_VERSION || '/v1',
+    tableName = "music",
+    path = "/" + tableName,
+    sLocation = prefix + path;
 
 var service = {
 
@@ -49,7 +50,7 @@ var service = {
     }
 };
 
-require('@mitchallen/microservice-mongodb')(service, function(err,obj) {
+core.Service(service, function(err,obj) {
     if( err ) {
         console.log(err);
         throw new Error( err.message );

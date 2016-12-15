@@ -1,6 +1,6 @@
 {
   "name": "music-post",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@mitchallen/demand": "^0.1.2",
-    "@mitchallen/microservice-mongodb": "^0.1.0"
+    "@mitchallen/microservice-mongodb": "^0.2.1"
   }
 }

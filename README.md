@@ -125,7 +125,11 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
-#### Version 0.2.0 release notes
+#### Version 0.2.2 release notes
+
+* Updated examples
+
+#### Version 0.2.1 release notes
 
 * Updated @mitchallen/microservice-core to 0.3.1
 * Now uses __Service__ method 
