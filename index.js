@@ -8,10 +8,12 @@
 
 var post = require('./lib/post'),
     getOne = require('./lib/get-one'),
-    put = require('./lib/put');
+    put = require('./lib/put'),
+    del = require('./lib/del');
 
 module.exports = {
     Post: post,
     GetOne: getOne,
     Put: put,
+    Delete: del,
 };

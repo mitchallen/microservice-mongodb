@@ -1,6 +1,6 @@
 /**
-    Module: @mitchallen/microservice-mongodb/test/put
-      Test: put-smoke-test
+    Module: @mitchallen/microservice-mongodb/lib/
+      Test: delete-smoke-test
     Author: Mitch Allen
 */
 
@@ -12,8 +12,8 @@ var request = require('supertest'),
     testName = require("../../package").name,
     testVersion = require("../../package").version,
     verbose = process.env.TEST_VERBOSE || false,
-    testPort = process.env.TEST_SERVICE_PORT || 8030,
-    postPort = process.env.TEST_SERVICE_POST_PORT || 8031,
+    testPort = process.env.TEST_SERVICE_PORT || 8022,
+    postPort = process.env.TEST_SERVICE_POST_PORT || 8023,
     testCollectionName = "test-qa",
     testPrefix = "/v1",
     testUrl = testPrefix + "/" + testCollectionName,
@@ -32,16 +32,16 @@ var request = require('supertest'),
         age: 21
     };
 
-describe('Put microservice smoke test', function() {
+describe('Delete microservice smoke test', function() {
 
     var docId = null,   // Set by before method
     _module = null,
     _postModule = null;
 
-    delete require.cache[require.resolve(modulePath)];
-    _module = require(modulePath);
+    beforeEach(function(done) {
 
-    before(function(done) {
+        delete require.cache[require.resolve(modulePath)];
+        _module = require(modulePath);
         
         var postOptions = {
             name: testName,
@@ -86,31 +86,12 @@ describe('Put microservice smoke test', function() {
             });
     });
 
-    after(function(done) {
+    afterEach(function(done) {
         // Cleanup
         done();
     });
 
-    it('should not throw an error', function(done) {
-        var options = {
-            name: testName,
-            version: testVersion,
-            verbose: verbose,
-            port: testPort,
-            prefix: testPrefix,
-            mongodb: testMongo,
-            collectionName: testCollectionName,
-        };
-        _module.Put(options, function(err,obj) {
-            should.not.exist(err);
-            should.exist(obj);
-            var server = obj.server;
-            should.exist(server);
-            server.close(done)
-        });
-    });
-
-    it('should put to url', function(done) {
+    it('should delete from url', function(done) {
 
         var options = {
             name: testName,
@@ -122,23 +103,28 @@ describe('Put microservice smoke test', function() {
             collectionName: testCollectionName
         };
         
-        _module.Put(options, function(err,obj) {
+        _module.Delete(options, function(err,obj) {
             should.not.exist(err);
             should.exist(obj);
             var server = obj.server;
             should.exist(server);
 
-            // PUT
+            // DELETE
             request(testHost)
-                .put(testUrl + "/" + docId)
+                .del(testUrl + "/" + docId)
                 // MUST USE DOUBLE QUOTES - or JSON.parse bombs in GET.
-                // .query('filter={"email":"' + testEmail + '"}')\
-                .send({ status: "UPDATED" })
-                // .expect('Content-Type', /json/)
-                .expect(204)
+                // .query('filter={"email":"' + testEmail + '"}')
+                .expect('Content-Type', /json/)
+                .expect(200)
                 .end(function (err, res) {
                     should.not.exist(err);
-                    should.exist(res);
+                    should.exist(res.body);
+                    if(verbose) {
+                        console.log(JSON.stringify(res.body));
+                    }
+                    should.exist(res.body);
+                    should.exist(res.body.status);
+                    res.body.status.should.eql("OK");
                     server.close(done);
                 });
         });

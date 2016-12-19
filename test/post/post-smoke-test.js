@@ -27,7 +27,7 @@ var request = require('supertest'),
         uri: process.env.TEST_MONGO_URI || 'mongodb://localhost/test',
     };
 
-describe('post microservice smoke test', function() {
+describe('Post microservice smoke test', function() {
 
     var _module = null;
 

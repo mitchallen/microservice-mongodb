@@ -32,7 +32,7 @@ var request = require('supertest'),
         age: 21
     };
 
-describe('get-one microservice smoke test', function() {
+describe('GetOne microservice smoke test', function() {
 
     var docId = null,   // Set by before method
         _module = null,
@@ -111,8 +111,7 @@ describe('get-one microservice smoke test', function() {
             mongodb: testMongo,
             collectionName: testCollectionName,
         };
-        // Needed for cleanup between tests
-        // delete require.cache[require.resolve(modulePath)];
+
         _module.GetOne(options, function(err,obj) {
             should.not.exist(err);
             should.exist(obj);
