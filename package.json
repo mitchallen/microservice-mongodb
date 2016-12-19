@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --recursive --timeout 20000",
     "//": "To use: npm run test-nodemon (assumes global location of mocha)",
-    "test-nodemon": "nodemon /usr/local/bin/mocha --timeout 5000"
+    "test-nodemon": "nodemon /usr/local/bin/mocha --recursive --timeout 5000"
   },
   "repository": {
     "type": "git",

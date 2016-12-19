@@ -6,11 +6,10 @@
 /*jshint node: true */
 /*jshint esversion: 6 */
 
-var service = require('./lib/base')
-// var post = require('./lib/post');
+var post = require('./lib/post'),
+    getOne = require('./lib/get-one');
 
 module.exports = {
-    Service: service
-    // post: post,
-    // getOne: getOne,
+    Post: post,
+    GetOne: getOne,
 };
