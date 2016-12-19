@@ -1,12 +1,17 @@
 {
   "name": "@mitchallen/microservice-mongodb",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "microservice module for connecting to MongoDB",
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive --timeout 20000",
     "//": "To use: npm run test-nodemon (assumes global location of mocha)",
-    "test-nodemon": "nodemon /usr/local/bin/mocha --recursive --timeout 5000"
+    "test-nodemon": "nodemon /usr/local/bin/mocha --recursive --timeout 5000",
+    "test-base": "nodemon /usr/local/bin/mocha test/base --recursive --timeout 5000",
+    "test-post": "nodemon /usr/local/bin/mocha test/post --recursive --timeout 5000",
+    "test-get-one": "nodemon /usr/local/bin/mocha test/get-one --recursive --timeout 5000",
+    "test-put": "nodemon /usr/local/bin/mocha test/put --recursive --timeout 5000",
+    "test-delete": "nodemon /usr/local/bin/mocha test/del --recursive --timeout 5000"
   },
   "repository": {
     "type": "git",
