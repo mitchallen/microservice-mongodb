@@ -27,78 +27,6 @@ Provides MongoDB access through a microservice.
 * [Delete method](https://github.com/mitchallen/microservice-mongodb/blob/master/DEL-README.md)
 * [Put method](https://github.com/mitchallen/microservice-mongodb/blob/master/PUT-README.md)
 
-
-### Define a Service Object
-
-Each method requires a service object.
-
-The example shows one way of getting connection info from an environment variable.
-
-    var service = {
-    	name: ...,
-    	version: ...,
-    	verbose: ...,
-    	apiVersion: ...,
-    	port: ...,
-    	collectionName: ...,
-    	
-    	mongodb: {
-            uri: process.env.TEST_MONGO_URI || 'mongodb://localhost/test',
-        },
-        
-    	method: function (info) {
-    	
-    		var router = info.router,
-                db = info.connection.mongodb.db;
-    		
-    		router.[get,post,put,patch,delete] ... { 
-    		   
-				// Call a MongDB API method
-				db.[method](function(err,...) {
-				})
-    		};
-    		
-			return router;
-    	}
-
-    };
-  
-To login with a username and password, you would need a __uri__ like this example for [mlab.com](http://mlab.com):
-
-    export TEST_MONGO_URI='mongodb://foo:fooword@ds12345.mlab.com:12345/dbnode01'  
-    
-You would replace __foo__ with your __mlab__ username and __fooword__ with your password. 
-
-You don't have to use your mlab login info. They let you add other users, such as a test user.
-
-The __12345__ portion of the string would change to match the uri that mlabs gives you. 
-    
-### Pass the Service Object to the microservice-mongodb module:
-
-Pass the __service__ object that you define to the a module method:
-
-	var core = require('@mitchallen/microservice-mongodb');
-
-    core.Post(service, function(err,obj) {});
-
-The object returned by the callback contains a __server__ field:
-
-    { server: server }
-
-It's a pointer to the express modules server. If you are familiar with express, it's the value returned by __app.listen__. You don't need to actually return anything. 
-
-It was handy for me to use the __close__ method in the unit tests so I wouldn't get port-in-use errors. It's also used internally when the module unexpectedly terminates.
-
-Here is how it should be used:
-
-    core.Post(options, function(err,obj) {
-        if(err) {
-        	// ...
-        }
-        var server = obj.server;
-        server.close()
-    });
-
 * * *
 
 ## Testing
@@ -124,6 +52,10 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Version 0.3.3 release notes
+
+* Updated README
 
 #### Version 0.3.2 release notes
 
