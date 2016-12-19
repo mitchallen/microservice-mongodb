@@ -1,6 +1,6 @@
 /**
-    Module: @mitchallen/microservice-mongodb-post
-      Test: smoke-test
+    Module: @mitchallen/microservice-mongodb/test/post
+      Test: put-smoke-test
     Author: Mitch Allen
 */
 

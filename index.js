@@ -7,9 +7,11 @@
 /*jshint esversion: 6 */
 
 var post = require('./lib/post'),
-    getOne = require('./lib/get-one');
+    getOne = require('./lib/get-one'),
+    put = require('./lib/put');
 
 module.exports = {
     Post: post,
     GetOne: getOne,
+    Put: put,
 };

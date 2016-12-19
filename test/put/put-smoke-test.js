@@ -1,6 +1,6 @@
 /**
-    Module: @mitchallen/microservice-mongodb/test/get-one
-      Test: get-smoke-test
+    Module: @mitchallen/microservice-mongodb/test/put
+      Test: put-smoke-test
     Author: Mitch Allen
 */
 
@@ -12,8 +12,8 @@ var request = require('supertest'),
     testName = require("../../package").name,
     testVersion = require("../../package").version,
     verbose = process.env.TEST_VERBOSE || false,
-    testPort = process.env.TEST_SERVICE_PORT || 8020,
-    postPort = process.env.TEST_SERVICE_POST_PORT || 8021,
+    testPort = process.env.TEST_SERVICE_PORT || 8030,
+    postPort = process.env.TEST_SERVICE_POST_PORT || 8031,
     testCollectionName = "test-qa",
     testPrefix = "/v1",
     testUrl = testPrefix + "/" + testCollectionName,
@@ -32,16 +32,16 @@ var request = require('supertest'),
         age: 21
     };
 
-describe('get-one microservice smoke test', function() {
+describe('put microservice smoke test', function() {
 
     var docId = null,   // Set by before method
-        _module = null,
-        _postModule = null;
+    _module = null,
+    _postModule = null;
+
+    delete require.cache[require.resolve(modulePath)];
+    _module = require(modulePath);
 
     before(function(done) {
-
-        delete require.cache[require.resolve(modulePath)];
-        _module = require(modulePath);
         
         var postOptions = {
             name: testName,
@@ -87,17 +87,7 @@ describe('get-one microservice smoke test', function() {
     });
 
     after(function(done) {
-        // Call after all tests
-        done();
-    });
-
-    beforeEach(function(done) {
-        // Call before each test
-        done();
-    });
-
-    afterEach(function(done) {
-        // Call after eeach test
+        // Cleanup
         done();
     });
 
@@ -111,9 +101,7 @@ describe('get-one microservice smoke test', function() {
             mongodb: testMongo,
             collectionName: testCollectionName,
         };
-        // Needed for cleanup between tests
-        // delete require.cache[require.resolve(modulePath)];
-        _module.GetOne(options, function(err,obj) {
+        _module.Put(options, function(err,obj) {
             should.not.exist(err);
             should.exist(obj);
             var server = obj.server;
@@ -122,7 +110,7 @@ describe('get-one microservice smoke test', function() {
         });
     });
 
-    it('should get from url', function(done) {
+    it('should put to url', function(done) {
 
         var options = {
             name: testName,
@@ -133,34 +121,24 @@ describe('get-one microservice smoke test', function() {
             mongodb: testMongo,
             collectionName: testCollectionName
         };
-
-        // Needed for cleanup between tests
-        _module.GetOne(options, function(err,obj) {
+        
+        _module.Put(options, function(err,obj) {
             should.not.exist(err);
             should.exist(obj);
             var server = obj.server;
             should.exist(server);
 
-            // GET
+            // PUT
             request(testHost)
-                .get(testUrl + "/" + docId)
+                .put(testUrl + "/" + docId)
                 // MUST USE DOUBLE QUOTES - or JSON.parse bombs in GET.
-                // .query('filter={"email":"' + testEmail + '"}')
-                .expect('Content-Type', /json/)
-                .expect(200)
+                // .query('filter={"email":"' + testEmail + '"}')\
+                .send({ status: "UPDATED" })
+                // .expect('Content-Type', /json/)
+                .expect(204)
                 .end(function (err, res) {
                     should.not.exist(err);
-                    should.exist(res.body);
-                    if(verbose) {
-                        console.log(JSON.stringify(res.body));
-                    }
-                    should.exist(res.body);
-                    should.exist(res.body.email);
-                    should.exist(res.body.status);
-                    should.exist(res.body.age);
-                    res.body.email.should.eql(testObject.email);
-                    res.body.status.should.eql(testObject.status);
-                    res.body.age.should.eql(testObject.age);
+                    should.exist(res);
                     server.close(done);
                 });
         });
