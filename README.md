@@ -22,10 +22,10 @@ You must use __npm__ __2.7.0__ or higher because of the scoped package name.
 
 Provides MongoDB access through a microservice.
 
-* [Post method](POST-README.md)
-* [GetOne method](GET-ONE-README.md)
-* [Delete method](DEL-README.md)
-* [Put method](PUT-README.md)
+* [Post method](https://github.com/mitchallen/microservice-mongodb/blob/master/POST-README.md)
+* [GetOne method](https://github.com/mitchallen/microservice-mongodb/blob/master/GET-ONE-README.md)
+* [Delete method](https://github.com/mitchallen/microservice-mongodb/blob/master/DEL-README.md)
+* [Put method](https://github.com/mitchallen/microservice-mongodb/blob/master/PUT-README.md)
 
 
 ### Define a Service Object
@@ -125,13 +125,16 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.3.2 release notes
+
+* Hard coded child README links to GitHub
+
 #### Version 0.3.1 release notes
 
 * Bumped version because breaks backward compatibility
 * Removed Service method
 * Added __Post__, __GetOne__, __Put__ and __Delete__ methods
 * Removed outdated examples (will update later)
-
 
 #### Version 0.2.2 release notes
 
