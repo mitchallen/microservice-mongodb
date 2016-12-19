@@ -22,9 +22,15 @@ You must use __npm__ __2.7.0__ or higher because of the scoped package name.
 
 Provides MongoDB access through a microservice.
 
+* [Post method](POST-README.md)
+* [GetOne method](GET-ONE-README.md)
+* [Delete method](DEL-README.md)
+* [Put method](PUT-README.md)
+
+
 ### Define a Service Object
 
-For MongoDB and other database support the original core service object was extended to return connection info (__info.connect__).  The info.connect object contains an item: __mongodb__ to access the database.
+Each method requires a service object.
 
 The example shows one way of getting connection info from an environment variable.
 
@@ -34,6 +40,7 @@ The example shows one way of getting connection info from an environment variabl
     	verbose: ...,
     	apiVersion: ...,
     	port: ...,
+    	collectionName: ...,
     	
     	mongodb: {
             uri: process.env.TEST_MONGO_URI || 'mongodb://localhost/test',
@@ -68,11 +75,11 @@ The __12345__ portion of the string would change to match the uri that mlabs giv
     
 ### Pass the Service Object to the microservice-mongodb module:
 
-Pass the __service__ object that you define to the __Service___ method:
+Pass the __service__ object that you define to the a module method:
 
 	var core = require('@mitchallen/microservice-mongodb');
 
-    core.service(service, function(err,obj) {});
+    core.Post(service, function(err,obj) {});
 
 The object returned by the callback contains a __server__ field:
 
@@ -84,20 +91,13 @@ It was handy for me to use the __close__ method in the unit tests so I wouldn't 
 
 Here is how it should be used:
 
-    core.Service(options, function(err,obj) {
+    core.Post(options, function(err,obj) {
         if(err) {
         	// ...
         }
         var server = obj.server;
         server.close()
     });
-
-
-### Example
-
-You can find working examples in the examples folder of the git repo.
-
-* __examples / music-post__ - demos how to post a record to MongoDB. See that folders __README__ for more info.
 
 * * *
 
@@ -125,6 +125,14 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.3.1 release notes
+
+* Bumped version because breaks backward compatibility
+* Removed Service method
+* Added __Post__, __GetOne__, __Put__ and __Delete__ methods
+* Removed outdated examples (will update later)
+
+
 #### Version 0.2.2 release notes
 
 * Updated examples
@@ -133,7 +141,7 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 * Updated @mitchallen/microservice-core to 0.3.1
 * Now uses __Service__ method 
-* Bumbed version because breaks backward compatiblity
+* Bumped version because breaks backward compatibility
 
 #### Version 0.1.3 release notes
 
